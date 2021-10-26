@@ -217,3 +217,40 @@ alternativeWay: true
 ---
 
 ## 18. Arrow Functions
+
+Em outras linguagens como Java e C#, temos o conceito de Lambda Expressions, no JavaScript, ela se chama Arrow Functions
+
+Antes escreviamos funcoes curtas assim:
+
+```javascript
+let log = function(message) {
+    console.log(message);
+}
+```
+
+Com arrow functions, escrevemos assim
+
+```javascript
+let log = (message) => {
+    console.log(message);
+}
+```
+
+Se nosso codigo tiver apenas uma linha, podemos deixar 
+mais minimalista e limpo com uma linha só:
+
+```javascript
+let log = (message) => console.log(message);
+```
+
+Se tiver apenas um parametro, retiramos os parenteses do parametro, porem, torna o codigo menos facil de ler, por que nao ficaa explicito que eh um parametro:
+
+```javascript
+let log = message => console.log(message);
+```
+
+Agora se nao tivermos nenhum parametro, podemos remover os parenteses:
+
+```javascript
+let log = () => console.log();
+```
