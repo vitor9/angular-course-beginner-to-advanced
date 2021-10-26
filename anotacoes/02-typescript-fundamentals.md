@@ -29,6 +29,27 @@ Esses recursos sao:
 * Erros e compilação, além de só em tempo de compilacao.
 * Otimas ferramentas, como intelisense e lint.
 
-Os navegadores atuais nao tem compatibilidade com o TypeScript, entao eh necessario fazer a "transpilacao" do ts para o js, para o navegador entender
 
 ---
+
+## 14. Primeiro programa TypeScript
+
+Primeiramente devemos instalar o typescript globalmente em nossa maquina. Para isso, rodamos o comando:
+`npm install -g typescript`
+
+Listamos a versao do nosso compilador typescript:
+`tsc --version`
+
+Ao criar o arquivo main.ts, precisamos transpilar o arquivo typescript em javascript
+`tsc main.ts`
+
+Apos rodar o comando, o javascript nos gera o arquivo `main.js`. Esse processo  de transpilacao acontece automaticamente de baixo dos panos. Nao precisamos manualmente chamar por `tsc` sempre que vamos rodar o comando `ng serve` do angular cli.
+
+Podemos tambem executar o arquivo main.js com o node:
+`node main.js`
+
+Para logar a msg:
+> "Hello World"
+
+---
+
