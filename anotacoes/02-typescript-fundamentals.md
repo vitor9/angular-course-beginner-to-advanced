@@ -254,3 +254,61 @@ Agora se nao tivermos nenhum parametro, podemos remover os parenteses:
 ```javascript
 let log = () => console.log();
 ```
+
+---
+
+## 19. Interfaces
+
+Quando estivermos trabalhando na escalabilidade de um metodo, pode ser que uma funcao termine com varios parametros, como por exemplo:
+
+```javascript
+let drawPoint = (x, y, a, b, c, d, e) => {
+    // ...
+}
+```
+
+Eh provavel que um grupo desses parametros, ou talvez todos eles, pertencem a apenas um conceito só. Por exemplo, carro tem varios propriedades, como bancos, farois, portas, pneus, etc. Nao eh uma boa pratica passar todos eles por parametros, mas sim, **encapsular eles em um objeto e passar por parametro.**
+
+```javascript
+let drawPoint = (point) => {
+    // ...
+}
+
+drawPoint({
+    x: 1,
+    y: 2
+})
+```
+
+Apesar de estarmos passando um objeto por parametro, o nosso algoritmo ainda esta esperando os parametros x, y. A primeira solucao para isso, seria utilizar in-line annotation, que ficaria dessa forma:
+
+```javascript
+let drawPoint = (point: { x: number, y: number }) => {
+    // ...
+}
+
+drawPoint({
+    x: 1,
+    y: 2
+})
+```
+
+Em casos simples, isso eh facil, porem, isso fica verboso, e conforme vamos escalando o nosso codigo, a quantidade de parametros vai aumentando, e também, pode ser que em algum outro lugar tenha outra funcao esperando aquele objeto `point`, nao queremos repetir esse mesmo object literal em multiplas partes de nosso codigo. Para esses casos, uma melhor solucao seria utilizar uma **interface**.
+
+```javascript
+interface Point {
+    x: number,
+    y: number
+}
+
+let drawPoint = (point: Point) => {
+    // ...
+}
+
+drawPoint({
+    x: 1,
+    y: 2
+})
+```
+
+Isso torna nosso codigo muito mais limpo e podemos reutilizar isso em multiplos lugares. Note tambem, a convencao da nomenclatura utilizada na interface, que eh Pascal. Entao, toda primeira letra de qualquer palavra deve ser maiuscula `Point`.
