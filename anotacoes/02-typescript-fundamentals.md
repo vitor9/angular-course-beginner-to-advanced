@@ -71,7 +71,7 @@ JavaScript tem 2 versoes:
 Em ES6, também tem o let.
 
 Apos criar o arquivo main15.ts, transpilamos o ts e rodamos com o node o js:
-`tsc main.ts | node main.js`
+`tsc main.ts && node main.js`
 
 E temos o seguinte resultado:
 >0
@@ -92,7 +92,7 @@ Se formos no arquivo ts e mudarmos a declaracao da variavel dentro do for, de `v
 Por conta de que a variavel `i` declarada com `let` foi armazenada no escopo do `for`, impossibilitando de dar visilibdade fora do escopo do `for`. Esse eh tambem eh um padrao do typescript.
 
 Se rodarmos novamente os comandos para rodar nossos arquivos:
-`tsc main.ts | node main.js`
+`tsc main.ts && node main.js`
 
 Recebemos o mesmo erro que vimos antes
 > Cannot find name 'i'.ts(2304)
@@ -102,4 +102,76 @@ Se abrirmos o nosso arquivo transpilado js, podemos ver que o i ainda esta como 
 Ou seja, apesar do TS reportar esses erros, ele ainda gera codigo javascript valido. De agora em diante, vamos apenas gerar variaveis com let.
 
 ---
+
+## 16. Tipos
+
+Conforme o arquivo main16.ts, ao criar a variavel count como `let count = 5`, se tentarmos alterar seu valor para outro tipo, como por exemplo `count = 'a'`, iremos receber um erro de compilacao:
+> Type 'string' is not assignable to type 'number'.ts(2322)
+
+Podemos fazer isso no JavaScript, porem, no typescript, recebemos o erro por conta da tipagem do ts. Se validarmos o nosso codigo transpilado:
+
+```javascript
+var count = 5;
+count = 'a';
+```
+
+Notamos que o tipo de dado esta como var, por conta de que o ts transpilou para um codigo compativel com os navegadores.
+Porem, codigo como esse eh garantido dar problema no futuro, porque pode ser que por exemplo, utilizemos essa variavel count dentro de um for.
+
+Se validarmos no nosso codigo TS passando o mouse em `count`, vemos que o ts definiu `count` como `number` por conta de que atribuimos o valor dela para 5, entao certamente espera um numero. 
+O que sera que acontece se declararmos uma variavel sem falor?
+`let a`, ao passar o mouse em cima da variavel: `let a: any`. Isso eh exatamente a forma que fica com as variaveis de js. Com isso, podemos atribuir qualquer valor para essa variavel, `a = 1, a = true, a = 'a'` que nem mesmo o TS reclama.
+Temos uma solucao para isso, quando nao sabemos o valor da variavel logo de cara, podemos utilizar o type annotations.
+
+Declaramos `let a: number`, e todas as diversas atribuições anteriores que fizemos irão dar erro, com exceção do `a = 1;`. Temos as seguintes type annotations:
+
+```javascript
+// Eh possivel ter as seguintes variaveis com type annotations:
+let a: number;
+let b: boolean;
+let c: string;
+let d: any;
+let e: number[];
+let f: number[][];
+let g: number[] = [1,2,3];
+let f: any[] = [1, true, 'a', false];
+```
+
+Tambem temos o tipo ENUM. Por exemplo, Se estivermos trabalhando com um grupo de constantes relacionadas, tipo cores. Em javascript puro/antigo, iriamos fazer da seguinte maneira:
+
+```javascript
+const ColorRed = 0;
+const ColorGreen = 1;
+const ColorBlue = 2;
+```
+
+Em um ENUM, podemos colocar todas as constantes relacionadas em um "container". Em TypeScript, podemos declarar um ENUM da seguinte maneira:
+
+```javascript
+enum Color { Red, Green, Blue }
+let backGroundColor = Color.Red //Intelisense sugere os ENUMs criados
+```
+
+Os ENUMs de cores automaticamente já recebem um número como valor, nao eh necessario especificar os numeros de cada valor do Enum, mas por boas praticas, eh melhor deixar explicito.
+
+Esse é o resultado que temos ao logar a variavel Color:
+> { '0': 'Red', '1': 'Green', '2': 'Blue', Red: 0, Green: 1, Blue: 2 }
+
+Ao especificar os numeros de cada elemento do Enum, temos o seguitne resultado
+
+```javascript
+enum Color { Red = 0, Green = 1, Blue = 2, Purple = 3 };
+console.log(Color);
+```
+
+>{
+  '0': 'Red',
+  '1': 'Green',
+  '2': 'Blue',
+  '3': 'Purple',
+  Red: 0,
+  Green: 1,
+  Blue: 2,
+  Purple: 3
+}
 
