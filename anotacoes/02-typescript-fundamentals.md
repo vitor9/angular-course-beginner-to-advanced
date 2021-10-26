@@ -175,3 +175,45 @@ console.log(Color);
   Purple: 3
 }
 
+---
+
+## 17. Type Assertions
+
+Algumas vezes, o TS acaba se confundindo com o tipo de variavel, por exemplo,
+Por padrao, quando inicialisamos uma variavel e nao damos um valor/tipo a ela, ela sera do tipo `any`.
+
+```javascript
+let message; // aqui ja esta sendo enxergado como any
+message = 'abc'
+let endsWithC = message.endsWith('c');
+```
+
+Intelisense so sugeriu os metodos para a variavel quando ela estava com o seu valor/tipo declarado.
+Neste caso, precisamos falar explicitamente para o compilador do TypeScript que essa mensagem de variavel eh na verdade uma String, e eh isso que chamamos de Type Assertions.
+
+Podemos fazer isso de 2 maneiras, a primeira eh para colocar um prefixo nessa variavel:
+
+```javascript
+let message; 
+message = 'abc'
+let endsWithC = (<string> message).endsWith('c'); // Aqui ja deu sugestoes do intelisense
+```
+
+E da outra maneira
+
+```javascript
+let message; 
+message = 'abc'
+let endsWithC = (message as string).endsWith('c'); // Aqui ja deu sugestoes do intelisense
+```
+
+Esse sera o resultado:
+> endsWithC:      true
+alternativeWay: true
+
+**NOTA:** O TS nao consegue executar o metodo endsWith se o compilador estiver como ES5. Teria de altera-lo para ES6:
+`tsc -t ES6 main17.ts && node main17.js`
+
+---
+
+## 18. Arrow Functions
