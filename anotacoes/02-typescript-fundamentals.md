@@ -312,3 +312,87 @@ drawPoint({
 ```
 
 Isso torna nosso codigo muito mais limpo e podemos reutilizar isso em multiplos lugares. Note tambem, a convencao da nomenclatura utilizada na interface, que eh Pascal. Entao, toda primeira letra de qualquer palavra deve ser maiuscula `Point`.
+
+---
+
+## 20. Classes
+
+Em nossa ultima aula, utilizamos a aclasse main19.ts para definir a forma Point de um objeto. Porém há um problema com esta implementação.
+
+Em POO, temos o conceito chamado de Cohesao. Isso significa que coisas que sao relacionadas, devia fazer parte de uma unidade só. Eles devem ir juntos.
+
+Utilizamos uma interface para definir a forma de um objeto.
+
+```javascript
+interface Point {
+    x: number,
+    y: number
+}
+```
+
+e abaixo temos uma funcao standalone
+
+```javascript
+let drawPoint = (point: Point) => {
+    // ...
+}
+```
+
+E eh ai aonde violamos o conceito de cohesao. O conceito de drawPoint(segundo codigo mencionado) eh altamente relacionado com a estrutura de um Point(primeiro codigo mencionado), nao deviam estar em funcoes separadas. 
+
+Outro exemplo de drawPoint violando os principios de cohesao:
+
+```javascript
+let getDistance = (pointA: Point, pointB: Point) => {
+    // ...
+}
+```
+
+Temos duas funcoes(o primeiro codigo e o terceiro que eh o que acabamos de escrever) que estao separadas do Point object(primeiro codigo).
+
+Por conta de que esses codigos estao  bem relacionados, eles deviam fazer parte de apenas uma unidade. Em POO, chamamos essa unidade de Classe.
+
+Uma classe agrupa variaveis/propriedades e funcoes(metodos) que sao relacionadas. 
+
+Em nossa implementacao atual, infelizmente nao podemos mover essas duas funcoes dentro de nossa interface Point, porque interfaces foram criadas apenas para declaracoes, elas nao podem incluir implementacao.
+Porem, podemos add uma funcao declaracao que nao retornara nada.
+
+```javascript
+interface Point {
+    x: number,
+    y: number,
+    draw: () => void
+}
+```
+
+Repare que nao tem o parametro point dentro da declaracao, pq todos esses membros, x,y, draw sao todos partes de uma unidade soh, nao precisamos passar x/y como parametros para a funcao draw. Essa funcao pode diretamente acessar as propriedades x/y nessa mesma unidade.
+
+Em interface, conforme dito antes, nao podemos ter implementacao, apenas a assinatura de uma funcao, entao com esta interface, estamos falando ao compilador de TypeScript que o nosso objeto Point deve ter duas propriedades x e y, e uma funcao chamada Draw, a implementacao disso eh em outro lugar.
+
+O que devemos fazer agora para aplicar a cohesao nisso?
+
+Primeiro utilizamos uma classe ao inves de interface:
+`class Point {`
+
+E trocamos em nossas propriedades, as virgulas por ponto e virgulas:
+`x: number;`
+
+Esses dois primeiros campos que trocamos as virgulas, chamamos de membros que armazenam dados. O terceiro campo eh uma funcao.
+Nesta classe, podemos ter de verdade uma implementacao da funcao draw() e tambem de getDistance.
+
+```javascript
+class Point {
+    x: number;
+    y: number;
+    draw() {
+        // ...
+    }
+
+    getDistance(anotehr: Point) {
+        // ...
+    }
+
+}
+```
+
+Com esta estrutura, tudo relacionado a Point, esta em uma unidade/classe. temos as coordenadas x,y e a funcao draw e getDistance. Em POO, nos referimos a estas coordenadas como campos e funcoes metodos, deve ficar atento a isso quando estes campso estiverem declarados em uma classe.
