@@ -396,3 +396,69 @@ class Point {
 ```
 
 Com esta estrutura, tudo relacionado a Point, esta em uma unidade/classe. temos as coordenadas x,y e a funcao draw e getDistance. Em POO, nos referimos a estas coordenadas como campos e funcoes metodos, deve ficar atento a isso quando estes campso estiverem declarados em uma classe.
+
+---
+
+## 21. Objects
+
+Para referenciarmos o campo x da nossa classe, sempre devemos chamar com o 'this.', por exemplo:
+`this.x`
+
+Porque assim, dizemos que estamos chamando pelo 'x' da classe, e nao por exemplo, de algum parametro ou outro meio externo.
+
+Tentamos rodar o seguinte programa:
+
+```javascript
+class Point {
+    x: number;
+    y: number;
+    draw() {
+        console.log('X: ' + this.x + ', Y: ' + this.y);
+    }
+
+    getDistance(anotehr: Point) {
+        // ...
+    }
+
+}
+
+let point: Point;
+
+point.draw();
+```
+
+Porem, recebemos o seguinte erro apontando para a linha aonde chamamos o metodo draw():
+`TypeError: Cannot read properties of undefined (reading 'draw')`
+
+Quando chamamos o metodo, o objeto Point ainda nao esta definido ou está undefined. Ao contrario de tipos basicos que temos como numeros, strings e booleanos, estamos lidando com um tipo 'customizado'.
+Quando definimos um objeto de tipo 'customizado' que eh o caso de 'point: Point', precisamos alocar explicitamente memoria para o objeto.
+
+Fazemos isso da seguinte forma:
+
+`let point: Point = new Point();`
+
+Podemos deixar essa declaracao mais limpa da seguinte maneira por conta de que esta sendo instanciando 'Point' 2x:
+
+`let point = new Point()`
+
+Pq o compilador do TS pode dizer que o tipo do objeto 'point' eh de tipo 'Point'. Podemos ver isso ao passar o mouse por cima de 'point' para ver o seu tipo.
+
+Rodamos novamente o programa com `node ts-hello/main21.js` e temos o seguinte resultado
+> X: undefined, Y: undefined
+
+Nao recebemos nenhum erro, porem nao temos nenhum valor para as variaveis pq nao passamos nenhum valor para elas.
+
+```javascript
+point.x = 1;
+point.y = 2;
+```
+
+Ao rodarmoms o programa de novo temos o resultado de:
+> X: 1, Y: 2
+
+Observacao, o point em 'class Point' é uma classe, e em 'let point' eh um objeto. Um objeto eh uma instancia de uma classe.
+
+---
+
+## 22. Constructors
+
