@@ -29,7 +29,6 @@ Esses recursos sao:
 * Erros e compilação, além de só em tempo de compilacao.
 * Otimas ferramentas, como intelisense e lint.
 
-
 ---
 
 ## 14. Primeiro programa TypeScript
@@ -118,7 +117,7 @@ count = 'a';
 Notamos que o tipo de dado esta como var, por conta de que o ts transpilou para um codigo compativel com os navegadores.
 Porem, codigo como esse eh garantido dar problema no futuro, porque pode ser que por exemplo, utilizemos essa variavel count dentro de um for.
 
-Se validarmos no nosso codigo TS passando o mouse em `count`, vemos que o ts definiu `count` como `number` por conta de que atribuimos o valor dela para 5, entao certamente espera um numero. 
+Se validarmos no nosso codigo TS passando o mouse em `count`, vemos que o ts definiu `count` como `number` por conta de que atribuimos o valor dela para 5, entao certamente espera um numero.
 O que sera que acontece se declararmos uma variavel sem falor?
 `let a`, ao passar o mouse em cima da variavel: `let a: any`. Isso eh exatamente a forma que fica com as variaveis de js. Com isso, podemos atribuir qualquer valor para essa variavel, `a = 1, a = true, a = 'a'` que nem mesmo o TS reclama.
 Temos uma solucao para isso, quando nao sabemos o valor da variavel logo de cara, podemos utilizar o type annotations.
@@ -236,7 +235,7 @@ let log = (message) => {
 }
 ```
 
-Se nosso codigo tiver apenas uma linha, podemos deixar 
+Se nosso codigo tiver apenas uma linha, podemos deixar
 mais minimalista e limpo com uma linha só:
 
 ```javascript
@@ -338,7 +337,7 @@ let drawPoint = (point: Point) => {
 }
 ```
 
-E eh ai aonde violamos o conceito de cohesao. O conceito de drawPoint(segundo codigo mencionado) eh altamente relacionado com a estrutura de um Point(primeiro codigo mencionado), nao deviam estar em funcoes separadas. 
+E eh ai aonde violamos o conceito de cohesao. O conceito de drawPoint(segundo codigo mencionado) eh altamente relacionado com a estrutura de um Point(primeiro codigo mencionado), nao deviam estar em funcoes separadas.
 
 Outro exemplo de drawPoint violando os principios de cohesao:
 
@@ -352,7 +351,7 @@ Temos duas funcoes(o primeiro codigo e o terceiro que eh o que acabamos de escre
 
 Por conta de que esses codigos estao  bem relacionados, eles deviam fazer parte de apenas uma unidade. Em POO, chamamos essa unidade de Classe.
 
-Uma classe agrupa variaveis/propriedades e funcoes(metodos) que sao relacionadas. 
+Uma classe agrupa variaveis/propriedades e funcoes(metodos) que sao relacionadas.
 
 Em nossa implementacao atual, infelizmente nao podemos mover essas duas funcoes dentro de nossa interface Point, porque interfaces foram criadas apenas para declaracoes, elas nao podem incluir implementacao.
 Porem, podemos add uma funcao declaracao que nao retornara nada.
@@ -461,4 +460,48 @@ Observacao, o point em 'class Point' é uma classe, e em 'let point' eh um objet
 ---
 
 ## 22. Constructors
+
+Se pararmos para reparar, nosso codigo esta muito 'verboso', pq temos 3 linhas para criar um objeto 'point' e colocar-lo em um estado valido
+
+```javascript
+let point = new Point();
+point.x = 1;
+point.y = 2;
+```
+
+E se tivessemos de add mais campos e setar seus valores? 'point.z = 3' ou mais por exemplo? Tornaria nosso codigo ainda mais verboso.
+
+Tem uma solucao mais limpa para isso. Em POO, temos um conceito chamado de 'constructor'. Toda a classe pode ter um constructor, que eh basicamente um metodo que eh chamado quando criamos uma instancia daquela classe. So relembrando, criamos uma instancia dessa maneira:
+
+`let point = new Point();`
+
+Criamos um construtor em nossa classe utilizando a palavra chave do TS, constructor.
+Lembrando que devemos utilizar o this para mostrar q vai ser atribuido o valor do parametro do construtor, para o campo/variavel da classe:
+
+```javascript
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+```
+
+Ao criar o construtor, a nossa instancia declarada anteriormente ja esta acusando erro de compilacao.
+Porque quando criamos uma nova instancia de Point, precisamos declarar os valores que setamos no construtor
+
+`let point = new Point(1, 2);`
+
+E com isso, removemos aquela atribuicao de valores 'point.x = 1/point.x = 2'
+
+E se eu quisesse instanciar um novo objeto Point sem settar os valores do parametro?
+A solucao do TS para isso, eh diferente da implementacao de outras linguagens com foco em POO, como por exemplo Java ou C#, isso pq neles, podemos ter multiplos construtores, e podemos criar um construtor com e outro sem valores para settar.
+
+A solucao do TS, eh tornar estes parametros opcionais para serem preenchidos, eh colocando uma interrogacao na variavel do parametro, da seguinte maneira:
+
+`constructor(x?: number, y?: number) {`
+
+Com isso, nao teremos mais erros de compilacao ao instanciar novos objetos.
+
+---
+
+## 23. Access Modifiers / Modificadores de Acesso
 
