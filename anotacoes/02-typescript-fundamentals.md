@@ -570,3 +570,7 @@ O compilador gera esses campos da seguinte maneira
         this.y = y;
     }
 ```
+
+---
+
+## 25. Acessando modificadores em parametros dos construtores
