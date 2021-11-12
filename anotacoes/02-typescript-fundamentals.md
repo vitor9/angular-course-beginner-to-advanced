@@ -505,3 +505,14 @@ Com isso, nao teremos mais erros de compilacao ao instanciar novos objetos.
 
 ## 23. Access Modifiers / Modificadores de Acesso
 
+Se quisessemos iniciar os campos, porem ,priva-los de ser modificados os seus valores, podemos utilizar os modificadores de acesso. Algumas vezes, queremos esse comportamento em nosso programa para tornar o codigo mais 'previsivel', reduz as chances para bugs.
+
+Eles sao basicamente palavras chaves para aplicarmos para varios membros da classe para controlar o acesso externo.
+
+Temos os seguintes modificadores de acesso:
+
+* public
+
+* private
+
+* protected
