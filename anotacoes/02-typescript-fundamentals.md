@@ -534,3 +534,39 @@ ira gerar erro de compilacao com a seguinte msg:
 > Property 'x' is private and only accessible within class
 
 Se quisessemos tornar um membro ou funcao publico, estariamos sendo redundantes, por conta de que por padrao, ja eh publico, devemos utilizar apenas quando necessario.
+
+---
+
+## 24. Acessando modificadores em parametros dos construtores
+
+Se analisarmos o nosso codigo, podemos ver que esta redundante.
+
+```javascript
+    private x: number;
+    private y: number;
+
+    constructor(x?: number, y?: number) {
+        this.x = x;
+        this.y = y;
+    }
+```
+
+O TS tem um recurso que faz com que consigamos o mesmo resultado com menos codigo, para isso, removemos a inicializacao dos membros x e y, e tiramos as duas linhas this.
+Colocamos os prefixos de modificadores de acesso nos parametros do nosso construtor
+
+O compilador do TS ira agerar todos estes campos para nos. O resultado final em nosso codigo ficara da seguinte maneira:
+
+```javascript
+    constructor(private x?: number, private y?: number) {}
+```
+
+O compilador TS ira gerar os campos com o mesmo nome que definimos nos construtores e tambem ira inicializar os campos com os valores dos argumentos. Podemos tambem alterar o modificador de acesso para outro, como public ou protected.
+
+O compilador gera esses campos da seguinte maneira
+
+```javascript
+    function Point(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+```
