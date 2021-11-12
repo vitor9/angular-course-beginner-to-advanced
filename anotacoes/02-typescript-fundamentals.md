@@ -516,3 +516,21 @@ Temos os seguintes modificadores de acesso:
 * private
 
 * protected
+
+Por padrao,todos os membros sao publicos.
+
+Se declararmos um membro como private, ele não ira ..aparecer mais para ser definido o seu valor no intellisense, e se mesmo assim tentaramos atribuir valor, por exemplo:
+
+```javascript
+private x: number;
+
+let point = new Point();
+
+point.x = 3 // erro de compilacao
+
+```
+
+ira gerar erro de compilacao com a seguinte msg:
+> Property 'x' is private and only accessible within class
+
+Se quisessemos tornar um membro ou funcao publico, estariamos sendo redundantes, por conta de que por padrao, ja eh publico, devemos utilizar apenas quando necessario.
