@@ -573,4 +573,116 @@ O compilador gera esses campos da seguinte maneira
 
 ---
 
-## 25. Acessando modificadores em parametros dos construtores
+## 25. Propriedades
+
+Conforme visto na aula anteiror, nossa variavel point eh privada, da maneira que vimos no curso, nao conseguimos buscar o valor de point
+
+```javascript
+point.x // da erro de compilacao por conta que eh private
+```
+
+Qual seria a solucao para esse caso? O metodo abaixo pode resolver isso
+
+```javascript
+    getX() {
+        return this.x;
+    }
+```
+
+Pq na classe em que se localiza essa funcao, se tem todos os membros privados da classe, porem nao podemos acessar externamente, como estavamos fazendo anteriormente.
+Passamos o valor para outra variavel por exemplo utilizando nossa nova funcao, assim:
+
+```javascript
+let x = point.getX();
+```
+
+E se quisessemos dar ao usuario uma forma de settar a cordenada inicial no construtor, mas tambem queremos que ele possa mudar depois, apenas dado um range especifico de um valor?
+
+```javascript
+    setX(value) {
+        if (value < 0) { // naoa eh necessario chaves no if do TS
+            throw new Error('Value cannot be less than 0');
+        }
+        this.x = value;
+    }
+```
+
+Com essa implementacao, podemos sempre mudar o valor do campo X da seguinte maneira:]
+```javascript
+point.setX(10);
+```
+
+Para este caso, especificamente no TS, podemos utilizar o que chamamos de Properties.
+No JS e em varias linguagens POO temos esse conceito de Property, que serve exatamente para este cenario.
+Definimos Property da seguinte maneira:
+
+```javascript
+    get X() { // alteramos o nome da funcao
+        return this.x;
+    }
+
+    set X(value) { // de novo
+        if (value < 0) {
+            throw new Error('Value cannot be less than 0');
+        }
+        this.x = value;
+    }
+```
+
+A diferenca entre essa alteracao e antes, eh que podemos utilizar isso como campos.
+Entao, valor ler o valor de X dessa maneira:
+
+```javascript
+    let x = point.X; // atribuindo valor a uma nova variavel atraves da leitura de X
+    point.X = 10; // atribuindo valor para a variavel X de 10 com Property
+```
+
+Nao precisamos chamar a funcao igual estava antes, tornando um codigo mais limpo.
+Eh basicamente isso que serve Properties, se temos campos sprivados e queremos dar acesso a leitura para meios externos, ou se queremos dar ao consumidor de nossas classes a abilidade de settar os valores e queremos ter uma validacao basica, utilizamos o Property. Chamamos o 'set' de setter, e o get de getter.
+
+Se quisermos dar acesso APENAS a leitura, ou seja, apenas ao Getter sem o Setter, simplesmente removemos o setter
+
+```javascript
+
+    get X() { // alteramos o nome da funcao
+        return this.x;
+    }
+
+    // set X(value) { // de novo
+    //     if (value < 0) {
+    //         throw new Error('Value cannot be less than 0');
+    //     }
+    //     this.x = value;
+    // }
+
+
+   point.X = 10; // vai dar erro de compilacao 
+
+```
+
+Uma ultima coisa, utilizamos o X maiusculo como nome de nossa propriedades X. No JS e TS, utilizamos Camel Case/Notation para nomeaer nossos campos, ou seja, primeira letra da primeira palavra eh minuscula, e a primeira letra de toda palavra em seguida eh em maiuscula, tipo:
+> nomeDaMinhaClasse
+
+E isso se aplica as nossas propriedades? Se eu mudar o nome dos nossos getters e setters para minuscula, ira conflitar com o nome dos parametros dos nossos construtores.
+
+Uma convencao utilizada para resolver este problema, eh para utilizar o prefixo com '_' ou underline no começo do campo:
+
+> constructor(private _x?: number, private y?: number) {}
+
+e ai, renomeamos o nome dos nossos get e set:
+
+```javascript
+    get x(){
+        return this._x;
+    }
+    set x(value){
+        this._x = value;
+    }
+
+    let pointX = point.x;
+    point.x = 10;
+```
+
+Observacao: Uma propriedade parece como um campo por fora, mas internamente eh um metodo na classe. Mais precisamente, eh ou um metodo getter ou setter, ou a combinacao de um gettere e um setter
+
+## 26. Modulos
