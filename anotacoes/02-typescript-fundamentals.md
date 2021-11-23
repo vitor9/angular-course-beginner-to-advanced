@@ -672,6 +672,9 @@ Uma convencao utilizada para resolver este problema, eh para utilizar o prefixo 
 e ai, renomeamos o nome dos nossos get e set:
 
 ```javascript
+
+    constructor(private _x?: number, private _y?: number) {}
+
     get x(){
         return this._x;
     }
@@ -686,3 +689,25 @@ e ai, renomeamos o nome dos nossos get e set:
 Observacao: Uma propriedade parece como um campo por fora, mas internamente eh um metodo na classe. Mais precisamente, eh ou um metodo getter ou setter, ou a combinacao de um gettere e um setter
 
 ## 26. Modulos
+
+No mundo real, nao teremos classes simples e também funcoes simples, teremos centenas de classes e linhas de codigo.
+Nao queremos escrever o codigo em apenas um arquivo igual o main.ts.
+
+O essencial mesmo, vamos mover a definicao do point para algum outro lugar.
+
+Criamos um arquivo chamado point.ts e jogamos todo o codigo referente a estrutura de point para esse novo arquivo.
+
+No TS, temos o conceito chamado de Modulos, em resumo, todo arquivo pode ser um modulo, nossos 2 arquivos(main.ts e point.ts) ainda nao sao modulos, nossa classe Point nao esta acessivel em nenhum outro lugar fora do arquivo. 
+
+Para externalizarmos o arquivo, temos que transforma-los em modulos externos para outros arquivos exportarem da seguinte maneira:
+> export class Point {
+
+A partir disso, no ponto de vista do TS, este arquivo eh um modulo, e para utilizarmos a nossa classe Point no main.ts, precisamos importar Point para o nosso main:
+```javascript
+import { Point } from './point'  // caminho relativo para o arquivo. sem extensao/ts
+import { Point1, Point2, Point3 }   // em caso de multiploas classes
+                                    // './' significa diretorio atual
+```
+
+Modulos do proprio angular devem ser importados de forma diferente, pq esses arqvs nao fazem parte da nossa app, e sim do Angular.
+> import { ClasseDoCore } from '@angular/core';
