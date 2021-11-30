@@ -768,3 +768,69 @@ let component = new LikeComponent(10, true);
 component.onClick();
 console.log(`likesCount: ${component.likesCount}, isSelected: ${component.isSelected}`);
 ```
+
+---
+
+## 29. O problema da nossa implementacao atual
+
+Antes de chamarmos o metodo onClick e apos a instanciaacao da var component, podemos editar o valor de like, mesmo apos instanciar a contagem de like com 10:
+
+```javascript
+let component = new LikeComponent(10, true);
+component.likesCount = 2; // e alteramos indevidamente o valor de likes
+component.isSelected = false; // o mesmo se aplica ao isSelected
+component.onClick();
+```
+
+O certo mesmo, seria o valor da contagem de likes, mudar APENAS ao ser utilizada a funcao onClick.
+Eh aqui, aonde precisamos implementar uma propriedade read-only, para que o consumidor dessa classe nao possa alterar o valor desses 2 campos, apenas via metodo onClick.
+
+vamos alterar o seguinte:
+
+```javascript
+// de
+constructor(public likesCount: number, public isSelected: boolean) {}
+// para
+constructor(private _likesCount: number, private _isSelected: boolean) {}
+
+// add os metodos para tornarmos acessivel nossos campos ao mundo externo
+get likesCount() {
+    return this._likesCount;
+}
+
+get isSelected() {
+    return this._isSelected;
+}
+```
+
+No nosso main
+```javascript
+let component = new LikeComponent(10, true);
+component.likesCount = 2; // agora esta retornando erro de compilacao
+component.isSelected = false; // aqui tbm
+component.onClick();
+ 
+```
+
+Receberemos os seguintes erros ao compilar:
+
+```javascript
+vitor@pop-os:~/udemy-courses/angular-course-beginner-to-advanced/ts-hello/exercicio$ tsc main.ts && node main.js
+solucao.ts:9:9 - error TS1056: Accessors are only available when targeting ECMAScript 5 and higher.
+get likesCount() {
+
+solucao.ts:13:9 - error TS1056: Accessors are only available when targeting ECMAScript 5 and higher.
+get isSelected() {
+```
+
+Para isso, devemos rodar o seguinte comando passando a flag ES5:
+> tsc main.ts --target ES5 && node main.js
+
+Para termos a saida:
+> likesCount: 9, isSelected: false
+
+No mundo real, nao utilizamos os get e set, porque eh frequentemente utilizado os campos.
+O que vimos aqui, sobre mudar os valores dos campos fora da classe, nao acontece na vida real no Angular.
+
+Pq em apps Angular, eh feito como se fosse uma amarracao um elemento na View, como span, paragrafo e etc, em um campo de nosso componente e com isso, o valor do campo eh exibido na tela.
+Entao, nao ha codigo para diretamente modificar esse valor, modificacao acontece apenas quando o usuario clica em um botao ou engatilha alguma outra acao que ativa um modelo/dummy.

@@ -1,6 +1,6 @@
 "use strict";
 // import { Like } from "./exercise";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 // let giveLike = new Like(5);
 // giveLike.likePost(false);
 // giveLike.likePost(true);
