@@ -1,0 +1,11 @@
+"use strict";
+// import { Like } from "./exercise";
+exports.__esModule = true;
+// let giveLike = new Like(5);
+// giveLike.likePost(false);
+// giveLike.likePost(true);
+// giveLike.likePost(false);
+var solucao_1 = require("./solucao");
+var component = new solucao_1.LikeComponent(10, true);
+component.onClick();
+console.log("likesCount: ".concat(component.likesCount, ", isSelected: ").concat(component.isSelected));

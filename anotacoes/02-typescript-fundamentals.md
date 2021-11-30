@@ -688,6 +688,9 @@ e ai, renomeamos o nome dos nossos get e set:
 
 Observacao: Uma propriedade parece como um campo por fora, mas internamente eh um metodo na classe. Mais precisamente, eh ou um metodo getter ou setter, ou a combinacao de um gettere e um setter
 
+
+---
+
 ## 26. Modulos
 
 No mundo real, nao teremos classes simples e também funcoes simples, teremos centenas de classes e linhas de codigo.
@@ -711,3 +714,57 @@ import { Point1, Point2, Point3 }   // em caso de multiploas classes
 
 Modulos do proprio angular devem ser importados de forma diferente, pq esses arqvs nao fazem parte da nossa app, e sim do Angular.
 > import { ClasseDoCore } from '@angular/core';
+
+
+---
+
+## 27. Exercicio
+
+Um componente eh uma classe TS/JS que encapsula os dados para renderizacao
+
+Depois quero melhorar o exercisio, com um html que tem um botao que chama a funcao de dar like, e proximo a ele, ter o numero de likes.
+
+---
+
+
+## 28. Solucao
+
+No metodo OnClick, a implementacao abaixo:
+
+```javascript
+        if (this.isSelected) {
+            this.likesCount--;
+            this.isSelected = false;
+        } else {
+            this.likesCount++;
+        }
+```
+
+vai ficar assim:
+
+```javascript
+this.likesCount += (this.isSelected) ? -1 : +1;
+this.isSelected = !this.isSelected;```
+```
+
+Do nosso jeito, o main ficaria assim:
+```javascript
+import { Like } from "./exercise";
+
+let giveLike = new Like(5);
+
+giveLike.likePost(false);
+
+giveLike.likePost(true);
+
+giveLike.likePost(false);
+```
+
+Do jeito do mosh, ficaria assim:
+```javascript
+import { LikeComponent } from "./solucao";
+
+let component = new LikeComponent(10, true);
+component.onClick();
+console.log(`likesCount: ${component.likesCount}, isSelected: ${component.isSelected}`);
+```
